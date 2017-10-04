@@ -31,6 +31,7 @@ This straight bar load cell is made from an aluminum-alloy and is capable of rea
 ### From pi wiring ref
 - Green: A-
 - White: A+
+
 As my board only has E,A,B +/-
 
 ## Specification
