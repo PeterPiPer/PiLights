@@ -28,6 +28,10 @@ This straight bar load cell is made from an aluminum-alloy and is capable of rea
 - Black: E-
 - White: S+
 - Green: S- 
+### From pi wiring ref
+- Green: A-
+- White: A+
+As my board only has E,A,B +/-
 
 ## Specification
 - Differential input voltage: ±40mV(Full-scale differential input voltage is ± 40mV)
