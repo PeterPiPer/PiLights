@@ -44,3 +44,4 @@ As my board only has E,A,B +/-
 # References to check if I can't work it out my self
 [Reference 1](http://hivetool.org/w/index.php?title=Interface_the_HX711_to_Pi)
 [Reference 2, tutorial](https://tutorials-raspberrypi.com/digital-raspberry-pi-scale-weight-sensor-hx711/)
+[Datasheet HX711](https://cdn.sparkfun.com/datasheets/Sensors/ForceFlex/hx711_english.pdf)
