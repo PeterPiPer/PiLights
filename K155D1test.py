@@ -20,29 +20,25 @@ import time
 # 1-0-0-0	8	01
 # 1-0-0-1	9	02
 
-global GPIO_A
-global GPIO_B
-global GPIO_C
-global GPIO_D
 
 # Adjust for GPIO test setup
-GPIO_A = 18
+GPIO_A = 24
 GPIO_B = 25
 GPIO_C = 18
 GPIO_D = 23
 
+# Modify to test responsiveness to change
+# Can see flicker at 0.006, flicker free at 0.001
+# Nice scroll rate at 0.2 as can watch inputs cycle
+SLEEP_TIME=0.2
 
 # Turn on pins associated with A, B, C, D inputs
-#def bdc(a, b, c, d) :
-#may have truth table wrong way round...
-#not counting as first setup
-def bdc(d, c, b, a) :
-	print "A:", a, " B:", b, " C:", c, " D:", d
-	GPIO.output (GPIO_A, True) if a else GPIO.output (GPIO_A, False)
-	GPIO.output (GPIO_B, True) if b else GPIO.output (GPIO_B, False)
-	GPIO.output (GPIO_C, True) if c else GPIO.output (GPIO_C, False)
-	GPIO.output (GPIO_D, True) if d else GPIO.output (GPIO_D, False)
-	time.sleep (3)
+def bdc(a, b, c, d) :
+	GPIO.output (GPIO_A, False) if a==0 else GPIO.output (GPIO_A, True)
+	GPIO.output (GPIO_B, False) if b==0 else GPIO.output (GPIO_B, True)
+	GPIO.output (GPIO_C, False) if c==0 else GPIO.output (GPIO_C, True)
+	GPIO.output (GPIO_D, False) if d==0 else GPIO.output (GPIO_D, True)
+	time.sleep (SLEEP_TIME)
 	
 
 # Validate command line
@@ -52,18 +48,18 @@ if argcnt != 1 and argcnt != 5:
 
 
 # Initialise GPIO 
-GPIO.setmode (GPIO.BCM)
 GPIO.cleanup()
-GPIO.setup (GPIO_A, GPIO.OUT)
-GPIO.setup (GPIO_B, GPIO.OUT)
-GPIO.setup (GPIO_C, GPIO.OUT)
-GPIO.setup (GPIO_D, GPIO.OUT)
+GPIO.setmode (GPIO.BCM)
+GPIO.setup (GPIO_A, GPIO.OUT, False)
+GPIO.setup (GPIO_B, GPIO.OUT, False)
+GPIO.setup (GPIO_C, GPIO.OUT, False)
+GPIO.setup (GPIO_D, GPIO.OUT, False)
 
 try:
 	if argcnt == 1:
-		for r in list(range(10)) :
-			bdc( r&8, r&4, r&2, r&1 )
-			print "counter r=", r, "r&2=", r&2, "r&2>>1=", r&2>>1
+		while True:
+			for r in list(range(10)) :
+				bdc( r&1, (r&2)>>1, (r&4)>>2, (r&8)>>3 )
 	else:
 		bdc(	int(sys.argv[1]),
 			int(sys.argv[2]),
@@ -75,3 +71,4 @@ except KeyboardInterrupt:
 except:
 	pass
 GPIO.cleanup()
+print "All done"
